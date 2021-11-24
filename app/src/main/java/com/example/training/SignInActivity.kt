@@ -15,32 +15,17 @@ import androidx.core.content.ContextCompat
 import java.lang.reflect.Array.get
 
 class SignInActivity : AppCompatActivity() {
-    lateinit var email: EditText
-    lateinit var password: EditText
+
     private val Context.isConnected: Boolean
         get() {
             return (getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager)
                 .activeNetworkInfo?.isConnected == true
         }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_sign_in)
-        email = findViewById(R.id.login)
-        password = findViewById(R.id.password)
-        val window: Window = this.window
-        window.statusBarColor = ContextCompat.getColor(this, R.color.teal_700)
-        if (isConnected)
-        {
-            print("Done")
-        }
-    }
 
-    fun login(view: android.view.View) {
-        if (email.text.toString().isNotEmpty()) {
-            val intent = Intent(this, MenuActivity::class.java)
-            startActivity(intent)
-            finish()
-        }
-    }
 
+    }
 }
