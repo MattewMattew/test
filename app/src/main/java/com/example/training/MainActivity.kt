@@ -20,6 +20,8 @@ import android.widget.ImageView
 import android.widget.ProgressBar
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
+import retrofit2.Call
+import retrofit2.Response
 
 class MainActivity : AppCompatActivity() {
     lateinit var email: EditText
@@ -48,6 +50,7 @@ class MainActivity : AppCompatActivity() {
         email.alpha = 0.toFloat()
         password.alpha = 0.toFloat()
         button.alpha = 0.toFloat()
+
         if (isConnected)
         {
             val timer = object: CountDownTimer(2000, 20){
@@ -116,26 +119,18 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun login(view: android.view.View) {
-        if (email.text.toString().isNotEmpty() && password.text.toString().isNotEmpty()) {
-            if (email.text.toString() == "123" && password.text.toString() == "123"){
-                val intent = Intent(this, MenuActivity::class.java)
-                startActivity(intent)
-                finish()
-            }
-            else{
-                val alert = AlertDialog.Builder(this).setTitle("Error")
-                    .setPositiveButton("Ok", null)
-                    .setMessage("Your Login or Password is'n correct!")
-                    .create()
-                    .show()
-            }
-        }
-        else{
-            val alert = AlertDialog.Builder(this).setTitle("Error")
-                .setPositiveButton("Ok", null)
-                .setMessage("You miss Login or Password!")
-                .create()
-                .show()
-        }
+//        if (email.text.toString().isNotEmpty() && password.text.toString().isNotEmpty()) {
+        val intent = Intent(this, MenuActivity::class.java)
+        startActivity(intent)
+        finish()
+
+//        }
+//        else{
+//            val alert = AlertDialog.Builder(this).setTitle("Error")
+//                .setPositiveButton("Ok", null)
+//                .setMessage("You miss Login or Password!")
+//                .create()
+//                .show()
+//        }
     }
 }
