@@ -17,6 +17,7 @@ import retrofit2.Response
 class MenuActivity : AppCompatActivity() {
     lateinit var mService: RetrofitServices
     lateinit var recyclerMovieList: RecyclerView
+    lateinit var adapter: MyMovieAdapter
     private lateinit var binding: ActivityMenuBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -29,16 +30,13 @@ class MenuActivity : AppCompatActivity() {
         recyclerMovieList = findViewById(R.id.recyclerMovieList)
         mService = Common.retrofitService
         recyclerMovieList.layoutManager = LinearLayoutManager(this)
-        getAllMovieList()
-    }
-
-    private fun getAllMovieList() {
         mService.getMovieList().enqueue(object : Callback<MutableList<Movie>> {
             override fun onFailure(call: Call<MutableList<Movie>>, t: Throwable) {
 
             }
             override fun onResponse(call: Call<MutableList<Movie>>, response: Response<MutableList<Movie>>) {
-                recyclerMovieList.adapter = MyMovieAdapter(response.body() as MutableList<Movie>)
+                recyclerMovieList.adapter= MyMovieAdapter(baseContext,response.body() as MutableList<Movie>)
+
             }
         })
     }

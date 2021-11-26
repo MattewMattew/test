@@ -20,10 +20,15 @@ import android.widget.ImageView
 import android.widget.ProgressBar
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
+import androidx.recyclerview.widget.LinearLayoutManager
 import retrofit2.Call
+import retrofit2.Callback
 import retrofit2.Response
+import com.google.gson.Gson
+import java.io.File
 
 class MainActivity : AppCompatActivity() {
+    lateinit var mService: RetrofitServices
     lateinit var email: EditText
     lateinit var password: EditText
     lateinit var image: ImageView
@@ -53,6 +58,19 @@ class MainActivity : AppCompatActivity() {
 
         if (isConnected)
         {
+            val fileName = cacheDir.absolutePath+"/PostJson.json"
+            var post = Post("A1D", "Mattew", "SibSquad", "none", "Mather", "none", "none","AAHAHAHAH")
+            var gson = Gson()
+            val jsonString:String = gson.toJson(post)
+            val file = File(fileName)
+            file.writeText(jsonString)
+
+
+
+
+
+
+
             val timer = object: CountDownTimer(2000, 20){
                 override fun onTick(p0: Long) {
                 }

@@ -15,20 +15,6 @@ class MainActivity2 : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main2)
-        recyclerMovieList = findViewById(R.id.recyclerMovieList)
-        mService = Common.retrofitService
-        recyclerMovieList.layoutManager = LinearLayoutManager(this)
-        getAllMovieList()
     }
 
-    private fun getAllMovieList() {
-        mService.getMovieList().enqueue(object : Callback<MutableList<Movie>> {
-            override fun onFailure(call: Call<MutableList<Movie>>, t: Throwable) {
-
-            }
-            override fun onResponse(call: Call<MutableList<Movie>>, response: Response<MutableList<Movie>>) {
-                recyclerMovieList.adapter = MyMovieAdapter(response.body() as MutableList<Movie>)
-            }
-        })
-    }
 }
