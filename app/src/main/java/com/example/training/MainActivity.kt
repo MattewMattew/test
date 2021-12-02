@@ -1,39 +1,33 @@
 package com.example.training
 
 import android.animation.ObjectAnimator
-import android.app.Activity
 import android.content.Context
 import android.content.Intent
-import android.graphics.Color
-import android.media.Image
 import android.net.ConnectivityManager
-import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.CountDownTimer
-import android.view.View
+import android.util.Log
 import android.view.Window
-import android.view.WindowManager
-import android.widget.Button
-import android.widget.EditText
-import android.widget.ImageView
-import android.widget.ProgressBar
+import android.widget.*
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
-import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.gson.Gson
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import com.google.gson.Gson
+import java.io.BufferedReader
 import java.io.File
 
 class MainActivity : AppCompatActivity() {
+    private var stringBuilder:StringBuilder?=null
     lateinit var mService: RetrofitServices
     lateinit var email: EditText
     lateinit var password: EditText
     lateinit var image: ImageView
     lateinit var button: Button
     lateinit var progressBar: ProgressBar
+    lateinit var textView: TextView
     private val Context.isConnected: Boolean
         get() {
             return (getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager)
@@ -50,25 +44,28 @@ class MainActivity : AppCompatActivity() {
 
         val window: Window = this.window
         window.statusBarColor = ContextCompat.getColor(this, R.color.teal_800)
-
+        mService = Common.retrofitService
         image.alpha = 0.toFloat()
         email.alpha = 0.toFloat()
         password.alpha = 0.toFloat()
         button.alpha = 0.toFloat()
+        textView = findViewById(R.id.postText)
 
         if (isConnected)
         {
-            val fileName = cacheDir.absolutePath+"/PostJson.json"
-            var post = Post("A1D", "Mattew", "SibSquad", "none", "Mather", "none", "none","AAHAHAHAH")
-            var gson = Gson()
-            val jsonString:String = gson.toJson(post)
-            val file = File(fileName)
-            file.writeText(jsonString)
+            mService.getMovieList().enqueue(object : Callback<MutableList<Movie>> {
+                override fun onFailure(call: Call<MutableList<Movie>>, t: Throwable) {
+
+                }
+                override fun onResponse(call: Call<MutableList<Movie>>, response: Response<MutableList<Movie>>) {
+                    val fileName = cacheDir.absolutePath+"/MovieJson.json"
+                    val movieList: MutableList<Movie> = response.body() as MutableList<Movie>
+                    writeJSONtoFile(fileName, movieList)
+//                recyclerMovieList.adapter= MyMovieAdapter(baseContext,response.body() as MutableList<Movie>)
 
 
-
-
-
+                }
+            })
 
 
             val timer = object: CountDownTimer(2000, 20){
@@ -134,21 +131,33 @@ class MainActivity : AppCompatActivity() {
 
 
 
-    }
 
+    }
+    private fun writeJSONtoFile(s:String, movieList: MutableList<Movie>) {
+        //Create a Object of Post
+        var post = movieList
+        //Create a Object of Gson
+        var gson = Gson()
+        //Convert the Json object to JsonString
+        var jsonString: String = gson.toJson(post)
+        //Initialize the File Writer and write into file
+        val file = File(s)
+        file.writeText(jsonString)
+        Log.d("TAG", jsonString)
+    }
     fun login(view: android.view.View) {
-//        if (email.text.toString().isNotEmpty() && password.text.toString().isNotEmpty()) {
+//       if (email.text.toString().isNotEmpty() && password.text.toString().isNotEmpty()) {
         val intent = Intent(this, MenuActivity::class.java)
         startActivity(intent)
         finish()
-
-//        }
-//        else{
-//            val alert = AlertDialog.Builder(this).setTitle("Error")
-//                .setPositiveButton("Ok", null)
-//                .setMessage("You miss Login or Password!")
-//                .create()
-//                .show()
-//        }
+//       }
+//       else{
+//           val alert = AlertDialog.Builder(this).setTitle("Error")
+//               .setPositiveButton("Ok", null)
+//               .setMessage("You miss Login or Password!")
+//               .create()
+//               .show()
+//       }
     }
+
 }

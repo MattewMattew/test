@@ -8,7 +8,7 @@ class Post {
     var createdby: String? = null
     var publisher: String? = null
     var imageurl: String? = null
-    var bio: String? = null
+    var bioo: String? = null
     constructor(): super() {}
     constructor(Name: String, RealName: String, Team: String,Firstapperance: String, Createdby: String, Publisher: String, Imageurl: String, Bio: String): super() {
         this.name = Name
@@ -18,6 +18,6 @@ class Post {
         this.createdby = Createdby
         this.publisher = Publisher
         this.imageurl = Imageurl
-        this.bio = Bio
+        this.bioo = Bio
     }
 }
