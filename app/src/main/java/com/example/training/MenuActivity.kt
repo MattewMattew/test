@@ -3,11 +3,13 @@ package com.example.training
 import android.content.Intent
 import android.os.Bundle
 import android.os.CountDownTimer
+import android.os.PersistableBundle
 import android.util.Log
 import android.view.MenuItem
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.get
 import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -57,27 +59,6 @@ class MenuActivity : AppCompatActivity() {
         })
     }
 
-//    private val mOnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { menuItem ->
-//        when (menuItem.itemId)
-//        {
-//            R.id.navigation_home -> {
-//                val toast = Toast.makeText(applicationContext, "Test", Toast.LENGTH_SHORT).show()
-////                mService.getMovieList().enqueue(object : Callback<MutableList<Movie>> {
-////                    override fun onFailure(call: Call<MutableList<Movie>>, t: Throwable) {
-////                        Log.d("TAG", "Warning")
-////                    }
-////                    override fun onResponse(call: Call<MutableList<Movie>>, response: Response<MutableList<Movie>>) {
-////                        val fileName = cacheDir.absolutePath+"/MovieJson.json"
-////                        val movieList: MutableList<Movie> = response.body() as MutableList<Movie>
-////                        readJSONfromFile(fileName)
-////                    }
-////                })
-//                return@OnNavigationItemSelectedListener true
-//            }
-//        }
-//        false
-//    }
-
     private fun readJSONfromFile(f:String) {
 
         //Creating a new Gson object to read data
@@ -92,13 +73,15 @@ class MenuActivity : AppCompatActivity() {
         Log.d("TAG", "Done")
         recyclerMovieList.adapter= MyMovieAdapter(baseContext,post)
     }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putInt("count", post)
+    }
     fun next(view: android.view.View) {
 
         val intent = Intent(this, MainActivity2::class.java)
         startActivity(intent)
 
     }
-
-
-
 }
