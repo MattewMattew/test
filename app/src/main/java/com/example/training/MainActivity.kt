@@ -1,6 +1,7 @@
 package com.example.training
 
 import android.animation.ObjectAnimator
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.net.ConnectivityManager
@@ -57,10 +58,14 @@ class MainActivity : AppCompatActivity() {
                 override fun onFailure(call: Call<MutableList<Movie>>, t: Throwable) {
 
                 }
+                @SuppressLint("SdCardPath")
                 override fun onResponse(call: Call<MutableList<Movie>>, response: Response<MutableList<Movie>>) {
                     val fileName = cacheDir.absolutePath+"/MovieJson.json"
                     val movieList: MutableList<Movie> = response.body() as MutableList<Movie>
                     writeJSONtoFile(fileName, movieList)
+                    Log.d("TAG", packageCodePath)
+                    val test = "/data/user/0/com.example.training/MovieJson.json"
+                    writeJSONtoFile(test, movieList)
 //                recyclerMovieList.adapter= MyMovieAdapter(baseContext,response.body() as MutableList<Movie>)
 
 
