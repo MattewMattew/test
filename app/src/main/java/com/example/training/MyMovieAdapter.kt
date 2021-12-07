@@ -10,7 +10,7 @@ import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.squareup.picasso.Picasso
 
-class MyMovieAdapter(private val context: Context,private val movieList: MutableList<Movie>):
+class MyMovieAdapter(private val movieList: MutableList<Movie>):
     RecyclerView.Adapter<MyMovieAdapter.MyViewHolder>()  {
     class MyViewHolder(itemView: View): RecyclerView.ViewHolder(itemView){
         val image: ImageView = itemView.findViewById(R.id.image_movie)

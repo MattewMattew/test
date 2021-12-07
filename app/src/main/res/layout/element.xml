@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="8dp">
+    android:layout_margin="8dp"
+    app:cardCornerRadius="20dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/linearLayout"
@@ -12,56 +13,72 @@
         android:layout_height="167dp">
 
 
-        <ImageView
-            android:id="@+id/image_movie"
-            android:layout_width="0dp"
-            android:layout_height="100dp"
-            android:layout_marginEnd="8dp"
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cardView"
+            android:layout_width="175dp"
+            android:layout_height="98dp"
+            android:layout_marginLeft="20dp"
+            app:cardCornerRadius="10dp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/txt_name"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.238" />
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:id="@+id/image_movie"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center" />
+        </androidx.cardview.widget.CardView>
 
         <TextView
             android:id="@+id/txt_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="192dp"
             android:layout_marginTop="16dp"
             android:text="name"
             android:textColor="@android:color/black"
             android:textSize="20sp"
             android:textStyle="bold"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintBottom_toTopOf="@+id/txt_team"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.14"
+            app:layout_constraintStart_toEndOf="@+id/cardView"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.655" />
 
         <TextView
             android:id="@+id/txt_team"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="196dp"
             android:layout_marginTop="8dp"
             android:text="team"
             android:textColor="@android:color/black"
             android:textSize="16sp"
             android:textStyle="normal"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/txt_name" />
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.129"
+            app:layout_constraintStart_toEndOf="@+id/cardView"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.467" />
 
         <TextView
             android:id="@+id/txt_createdby"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="184dp"
             android:layout_marginTop="12dp"
             android:text="createdby"
             android:textColor="@android:color/black"
             android:textSize="18sp"
             android:textStyle="italic"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/txt_team" />
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.17"
+            app:layout_constraintStart_toEndOf="@+id/cardView"
+            app:layout_constraintTop_toBottomOf="@+id/txt_team"
+            app:layout_constraintVertical_bias="0.081" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

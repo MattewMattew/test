@@ -1,14 +1,17 @@
 package com.example.training
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.os.PersistableBundle
 import android.util.Log
 import android.view.MenuItem
+import android.view.Window
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.core.view.get
 import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
@@ -40,44 +43,22 @@ class MenuActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMenuBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        val window: Window = this.window
+        window.statusBarColor = ContextCompat.getColor(this, R.color.white)
+
         val navView: BottomNavigationView = binding.navView
         val navController = findNavController(R.id.nav_host_fragment_activity_menu)
         navView.setupWithNavController(navController)
-
-        recyclerMovieList = findViewById(R.id.recyclerMovieList)
-        mService = Common.retrofitService
-        recyclerMovieList.layoutManager = LinearLayoutManager(this)
-        mService.getMovieList().enqueue(object : Callback<MutableList<Movie>> {
-            override fun onFailure(call: Call<MutableList<Movie>>, t: Throwable) {
-                Log.d("TAG", "Warning")
-            }
-            override fun onResponse(call: Call<MutableList<Movie>>, response: Response<MutableList<Movie>>) {
-                val fileName = cacheDir.absolutePath+"/MovieJson.json"
-                val movieList: MutableList<Movie> = response.body() as MutableList<Movie>
-                readJSONfromFile(fileName)
-            }
-        })
+//        recyclerMovieList = findViewById(R.id.recyclerMovieList)
+//        recyclerMovieList.layoutManager = LinearLayoutManager(this)
+//        val fileName = cacheDir.absolutePath+"/MovieJson.json"
+//        readJSONfromFile(fileName)
     }
 
-    private fun readJSONfromFile(f:String) {
 
-        //Creating a new Gson object to read data
-        var gson = GsonBuilder().create()
-        //Read the PostJSON.json file
-        val bufferedReader: BufferedReader = File(f).bufferedReader()
-        // Read the text from bufferReader and store in String variable
-        val inputString = bufferedReader.use { it.readText() }
-        //Convert the Json File to Gson Object
-        var post = gson.fromJson(inputString, Array<Movie>::class.java).toMutableList()
-//        //Initialize the String Builder
-        Log.d("TAG", "Done")
-        recyclerMovieList.adapter= MyMovieAdapter(baseContext,post)
-    }
 
-    override fun onSaveInstanceState(outState: Bundle) {
-        super.onSaveInstanceState(outState)
-        outState.putInt("count", post)
-    }
+
     fun next(view: android.view.View) {
 
         val intent = Intent(this, MainActivity2::class.java)
