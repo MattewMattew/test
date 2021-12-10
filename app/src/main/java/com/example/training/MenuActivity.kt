@@ -2,6 +2,7 @@ package com.example.training
 
 import android.content.Context
 import android.content.Intent
+import android.net.ConnectivityManager
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.os.PersistableBundle
@@ -38,6 +39,11 @@ class MenuActivity : AppCompatActivity() {
     lateinit var adapter: MyMovieAdapter
     lateinit var bottomNavigation: BottomNavigationView
     private lateinit var binding: ActivityMenuBinding
+    private val Context.isConnected: Boolean
+    get() {
+        return (getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager)
+            .activeNetworkInfo?.isConnected == true
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -60,9 +66,10 @@ class MenuActivity : AppCompatActivity() {
 
 
     fun next(view: android.view.View) {
-
-        val intent = Intent(this, MainActivity2::class.java)
-        startActivity(intent)
-
+        if (isConnected)
+        {
+            val intent = Intent(this, MainActivity2::class.java)
+            startActivity(intent)
+        }
     }
 }

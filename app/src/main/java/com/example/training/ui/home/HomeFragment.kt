@@ -1,8 +1,13 @@
 package com.example.training.ui.home
 
+import android.annotation.SuppressLint
 import android.app.AlertDialog
+import android.app.Dialog
 import android.content.Intent
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
+import android.text.Html
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -16,7 +21,6 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.training.*
-import com.example.training.databinding.FragmentHomeBinding
 import com.google.gson.GsonBuilder
 import java.io.BufferedReader
 import java.io.File
@@ -45,21 +49,37 @@ class HomeFragment : Fragment() {
 
         return view
     }
-    fun listen(position: Int,post: MutableList<Movie>)
+    @SuppressLint("SetTextI18n", "InflateParams")
+    fun listen(position: Int, post: MutableList<Movie>)
     {
-        val alertDialog = AlertDialog.Builder(this.activity)
-            val alertview = LayoutInflater.from(this.activity).inflate(R.layout.alert,null)
-            alertDialog.setView(alertview)
-                .create()
-                .show()
-//            .setTitle(post[position].name.toString())
-//            .setMessage("Real name: " +post[position].realname.toString()
-//                    +"\nTeam: "+post[position].team
-//                    +"\nFirst appearance: "+post[position].firstapperance.toString()
-//                    +"\nCreated by: "+post[position].createdby
-//                    +"\nPublisher: "+post[position].publisher
-//                    +"\nBio"+post[position].bio)
-//            .setPositiveButton("Ok",null)
+        val alertview = LayoutInflater.from(this.activity).inflate(R.layout.alert,null)
+        val name = alertview.findViewById<TextView>(R.id.name)
+        val realname = alertview.findViewById<TextView>(R.id.realname)
+        val team = alertview.findViewById<TextView>(R.id.team)
+        val createdby = alertview.findViewById<TextView>(R.id.createdby)
+        val publisher = alertview.findViewById<TextView>(R.id.publisher)
+        val bio = alertview.findViewById<TextView>(R.id.bio)
+        val button = alertview.findViewById<TextView>(R.id.buttonalert)
+        name.text = post[position].name
+        realname.text = Html.fromHtml("<b>Real name: </b>" + post[position].realname)
+        team.text = Html.fromHtml("<b>Team: </b>" + post[position].team)
+        createdby.text = Html.fromHtml("<b>Created by: </b>" + post[position].createdby)
+        publisher.text = Html.fromHtml("<b>Publisher: </b>" + post[position].publisher)
+        bio.text = Html.fromHtml("<b>Biography: </b>" + post[position].bio)
+
+
+        val customDialog = Dialog(requireActivity())
+        customDialog.setContentView(alertview)
+        customDialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        customDialog.show()
+        button.setOnClickListener{
+            customDialog.dismiss()
+        }
+
+//        val alertDialog = AlertDialog.Builder(this.activity)
+//            .setView(alertview)
+//            .create()
+//            .show()
 
 
     }
