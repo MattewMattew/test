@@ -20,7 +20,6 @@ class MyMovieAdapter(private val movieList: MutableList<Movie>, val clickListene
         val txt_name: TextView = itemView.findViewById(R.id.txt_name)
         val txt_team: TextView = itemView.findViewById(R.id.txt_team)
         val txt_createdby: TextView = itemView.findViewById(R.id.txt_createdby)
-        val txt_published: TextView = itemView.findViewById(R.id.published_item)
 
 
     }
@@ -39,7 +38,6 @@ class MyMovieAdapter(private val movieList: MutableList<Movie>, val clickListene
         holder.txt_name.text = movieList[position].name
         holder.txt_team.text = movieList[position].team
         holder.txt_createdby.text = movieList[position].createdby
-        holder.txt_published.text = movieList[position].publisher
         holder.itemView.setOnClickListener{
             clickListener(position)
         }
