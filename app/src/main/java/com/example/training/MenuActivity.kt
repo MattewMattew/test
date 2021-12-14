@@ -1,7 +1,10 @@
 package com.example.training
 
+import android.Manifest
+import android.Manifest.permission.WRITE_CALENDAR
 import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.net.ConnectivityManager
 import android.os.Bundle
 import android.os.CountDownTimer
@@ -12,6 +15,7 @@ import android.view.Window
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.view.get
 import androidx.navigation.findNavController
@@ -30,25 +34,28 @@ import java.io.BufferedReader
 import java.io.File
 import java.util.ArrayList
 
-
 class MenuActivity : AppCompatActivity() {
     lateinit var recyclerText: TextView
-    private var stringBuilder:StringBuilder?=null
+    private var stringBuilder: StringBuilder? = null
     lateinit var mService: RetrofitServices
     lateinit var recyclerMovieList: RecyclerView
     lateinit var adapter: MyMovieAdapter
     lateinit var bottomNavigation: BottomNavigationView
     private lateinit var binding: ActivityMenuBinding
     private val Context.isConnected: Boolean
-    get() {
-        return (getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager)
-            .activeNetworkInfo?.isConnected == true
-    }
+        get() {
+            return (getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager)
+                .activeNetworkInfo?.isConnected == true
+        }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMenuBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+
+
+
 
         val window: Window = this.window
         window.statusBarColor = ContextCompat.getColor(this, R.color.white)

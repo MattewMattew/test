@@ -50,7 +50,6 @@ class MainActivity : AppCompatActivity() {
         email.alpha = 0.toFloat()
         password.alpha = 0.toFloat()
         button.alpha = 0.toFloat()
-        textView = findViewById(R.id.postText)
 
         if (isConnected)
         {
@@ -63,7 +62,6 @@ class MainActivity : AppCompatActivity() {
                     val fileName = cacheDir.absolutePath+"/MovieJson.json"
                     val movieList: MutableList<Movie> = response.body() as MutableList<Movie>
                     writeJSONtoFile(fileName, movieList)
-                    Log.d("TAG", packageCodePath)
                     val test = "/data/user/0/com.example.training/MovieJson.json"
                     writeJSONtoFile(test, movieList)
 //                recyclerMovieList.adapter= MyMovieAdapter(baseContext,response.body() as MutableList<Movie>)
@@ -148,7 +146,6 @@ class MainActivity : AppCompatActivity() {
         //Initialize the File Writer and write into file
         val file = File(s)
         file.writeText(jsonString)
-        Log.d("TAG", jsonString)
     }
     fun login(view: android.view.View) {
 //       if (email.text.toString().isNotEmpty() && password.text.toString().isNotEmpty()) {

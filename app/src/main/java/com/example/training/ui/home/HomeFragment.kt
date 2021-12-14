@@ -41,11 +41,9 @@ class HomeFragment : Fragment() {
         recyclerMovieList = view.findViewById(R.id.recyclerMovieList)
         recyclerMovieList.layoutManager = LinearLayoutManager(this.activity)
         val cache: String = activity?.cacheDir.toString()
-        Log.d("TAG", cache)
         val fileName = "$cache/MovieJson.json"
         readJSONfromFile(fileName)
 
-        Log.d("TAG", recyclerMovieList.adapter.toString())
 
         return view
     }

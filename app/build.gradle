@@ -38,7 +38,7 @@ android {
 
 dependencies {
 
-
+    implementation 'com.google.android.gms:play-services-location:19.0.0'
     implementation 'com.github.d-max:spots-dialog:1.1@aar'
     implementation 'com.squareup.picasso:picasso:2.71828'
     implementation 'com.squareup.retrofit2:retrofit:2.4.0'
