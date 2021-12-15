@@ -10,14 +10,19 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/linearLayout"
         android:layout_width="match_parent"
-        android:layout_height="167dp">
+        android:layout_height="match_parent"
+        android:paddingTop="30dp"
+        android:paddingBottom="30dp">
 
 
         <androidx.cardview.widget.CardView
-            android:id="@+id/cardView"
+            android:id="@+id/cardView_alert"
             android:layout_width="175dp"
             android:layout_height="98dp"
+            android:layout_margin="20dp"
             android:layout_marginLeft="20dp"
+            android:layout_marginTop="50dp"
+            android:layout_marginBottom="50dp"
             app:cardCornerRadius="10dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -33,7 +38,7 @@
         </androidx.cardview.widget.CardView>
 
         <TextView
-            android:id="@+id/txt_name"
+            android:id="@+id/txt_name_alert_elem"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
@@ -41,44 +46,24 @@
             android:textColor="@android:color/black"
             android:textSize="20sp"
             android:textStyle="bold"
-            app:layout_constraintBottom_toTopOf="@+id/txt_team"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.14"
-            app:layout_constraintStart_toEndOf="@+id/cardView"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.655" />
+            app:layout_constraintHorizontal_bias="0.134"
+            app:layout_constraintStart_toEndOf="@+id/cardView_alert"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/txt_team"
+            android:id="@+id/txt_amount_elem"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:text="team"
+            android:text="100"
             android:textColor="@android:color/black"
-            android:textSize="16sp"
-            android:textStyle="normal"
+            android:textSize="20sp"
+            android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.129"
-            app:layout_constraintStart_toEndOf="@+id/cardView"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.467" />
-
-        <TextView
-            android:id="@+id/txt_createdby"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            android:text="createdby"
-            android:textColor="@android:color/black"
-            android:textSize="18sp"
-            android:textStyle="italic"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.17"
-            app:layout_constraintStart_toEndOf="@+id/cardView"
-            app:layout_constraintTop_toBottomOf="@+id/txt_team"
-            app:layout_constraintVertical_bias="0.081" />
+            app:layout_constraintHorizontal_bias="0.134"
+            app:layout_constraintStart_toEndOf="@+id/cardView_alert"
+            app:layout_constraintTop_toTopOf="parent" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

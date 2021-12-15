@@ -1,12 +1,8 @@
 package com.example.training.ui.dashboard
 
-import android.Manifest
 import android.Manifest.permission.ACCESS_FINE_LOCATION
-import android.Manifest.permission.WRITE_CALENDAR
 import android.app.Activity
-import android.content.Context
 import android.content.pm.PackageManager
-import android.location.Location
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -21,12 +17,10 @@ import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MapStyleOptions
-import com.google.android.gms.maps.model.MarkerOptions
 
 
 class DashboardFragment : Fragment(){
     private lateinit var fusedLocationClient: FusedLocationProviderClient
-
     private lateinit var mMap: MapView
     private var position = LatLng(-33.920455, 18.466941)
 

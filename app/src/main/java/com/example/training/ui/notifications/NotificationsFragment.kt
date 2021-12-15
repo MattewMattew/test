@@ -1,45 +1,49 @@
 package com.example.training.ui.notifications
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.example.training.MyCardAdapter
 import com.example.training.R
-import com.example.training.databinding.FragmentNotificationsBinding
+import com.google.gson.Gson
+import java.io.BufferedReader
+import java.io.File
 
 class NotificationsFragment : Fragment() {
-
-    private lateinit var notificationsViewModel: NotificationsViewModel
-    private var _binding: FragmentNotificationsBinding? = null
-
-    // This property is only valid between onCreateView and
-    // onDestroyView.
-    private val binding get() = _binding!!
+    private lateinit var recyclerView: RecyclerView
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        notificationsViewModel =
-            ViewModelProvider(this).get(NotificationsViewModel::class.java)
+        val view = LayoutInflater.from(container?.context).inflate(R.layout.fragment_notifications,container, false)
+        recyclerView = view.findViewById(R.id.recyclerCard)
+        recyclerView.layoutManager = LinearLayoutManager(this.context)
+        val fileName = activity?.cacheDir?.absolutePath+"/Card.json"
+        readJSONfromFile(fileName)
+        return view
+    }
+    private fun readJSONfromFile(s : String){
+        Log.d("TAG","1")
+        var gson = Gson()
+        Log.d("TAG","2")
+        val bufferedReader: BufferedReader = File(s).bufferedReader()
+        Log.d("TAG","3")
+        val input = bufferedReader.use {it.readText()}
+        Log.d("TAG","4")
+        val read = gson.fromJson(input,Array<String>::class.java).toMutableList()
+        Log.d("TAG", read.toString())
+        recyclerView.adapter = MyCardAdapter(read)
 
-        _binding = FragmentNotificationsBinding.inflate(inflater, container, false)
-        val root: View = binding.root
-
-        val textView: TextView = binding.textNotifications
-        notificationsViewModel.text.observe(viewLifecycleOwner, Observer {
-            textView.text = it
-        })
-        return root
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
-    }
+
+
+
 }

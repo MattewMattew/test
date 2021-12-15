@@ -1,34 +1,30 @@
 package com.example.training.ui.home
 
 import android.annotation.SuppressLint
-import android.app.AlertDialog
 import android.app.Dialog
-import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
-import android.text.Html
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import android.widget.ImageView
 import android.widget.TextView
-import android.widget.Toast
-import androidx.core.util.lruCache
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.training.*
+import com.google.gson.Gson
 import com.google.gson.GsonBuilder
+import com.squareup.picasso.Picasso
 import java.io.BufferedReader
 import java.io.File
-import java.text.FieldPosition
 
 class HomeFragment : Fragment() {
     private lateinit var recyclerMovieList: RecyclerView
-
+    var t: Int = 0
     // This property is only valid between onCreateView and
     // onDestroyView.
 
@@ -50,37 +46,60 @@ class HomeFragment : Fragment() {
     @SuppressLint("SetTextI18n", "InflateParams")
     fun listen(position: Int, post: MutableList<Movie>)
     {
+        val list = mutableListOf<String>()
         val alertview = LayoutInflater.from(this.activity).inflate(R.layout.alert,null)
-        val name = alertview.findViewById<TextView>(R.id.name)
-        val realname = alertview.findViewById<TextView>(R.id.realname)
-        val team = alertview.findViewById<TextView>(R.id.team)
-        val createdby = alertview.findViewById<TextView>(R.id.createdby)
-        val publisher = alertview.findViewById<TextView>(R.id.publisher)
-        val bio = alertview.findViewById<TextView>(R.id.bio)
-        val button = alertview.findViewById<TextView>(R.id.buttonalert)
+        val name = alertview.findViewById<TextView>(R.id.txt_name_alert_elem)
+        val image = alertview.findViewById<ImageView>(R.id.image_movie_alert_elem)
+        val amount = alertview.findViewById<TextView>(R.id.textView_alert)
+        val add = alertview.findViewById<Button>(R.id.add)
+        val remove = alertview.findViewById<Button>(R.id.remove)
+        val addtocard = alertview.findViewById<Button>(R.id.addtocard)
         name.text = post[position].name
-        realname.text = Html.fromHtml("<b>Real name: </b>" + post[position].realname)
-        team.text = Html.fromHtml("<b>Team: </b>" + post[position].team)
-        createdby.text = Html.fromHtml("<b>Created by: </b>" + post[position].createdby)
-        publisher.text = Html.fromHtml("<b>Publisher: </b>" + post[position].publisher)
-        bio.text = Html.fromHtml("<b>Biography: </b>" + post[position].bio)
+        Picasso.get().load(post[position].imageurl).into(image)
+        amount.text = t.toString()
+        add.setOnClickListener{
+            t += 1
+            amount.text = t.toString()
+        }
+        remove.setOnClickListener {
+            if (t > 0) {
+                t -= 1
+            }
+            amount.text = t.toString()
+
+        }
+
+
 
 
         val customDialog = Dialog(requireActivity())
         customDialog.setContentView(alertview)
         customDialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         customDialog.show()
-        button.setOnClickListener{
+        customDialog.setOnDismissListener{
+            t = 0
+        }
+
+        addtocard.setOnClickListener {
+            val cache = activity?.cacheDir?.absolutePath
+            val fileName = "$cache/Card.json"
+            list.add(name.text.toString())
+            list.add(amount.text.toString())
+            post[position].imageurl?.let { it1 -> list.add(it1) }
+            Log.d("TAG",list.toString()+fileName)
+            writeJSONfromFile(fileName,list)
+            list.clear()
             customDialog.dismiss()
         }
 
-//        val alertDialog = AlertDialog.Builder(this.activity)
-//            .setView(alertview)
-//            .create()
-//            .show()
-
-
     }
+    private fun writeJSONfromFile(s: String, movelist: MutableList<String>){
+        val gson = Gson()
+        val string : String = gson.toJson(movelist)
+        val file = File(s)
+        file.writeText(string)
+    }
+
     private fun readJSONfromFile(f:String) {
 
         //Creating a new Gson object to read data
