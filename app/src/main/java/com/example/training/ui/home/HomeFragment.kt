@@ -19,8 +19,11 @@ import com.example.training.*
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.squareup.picasso.Picasso
+import org.json.JSONArray
+import org.json.JSONObject
 import java.io.BufferedReader
 import java.io.File
+import java.util.*
 
 class HomeFragment : Fragment() {
     private lateinit var recyclerMovieList: RecyclerView
@@ -46,7 +49,9 @@ class HomeFragment : Fragment() {
     @SuppressLint("SetTextI18n", "InflateParams")
     fun listen(position: Int, post: MutableList<Movie>)
     {
-        val list = mutableListOf<String>()
+        val list = JSONArray()
+        val obj = JSONObject()
+        Log.d("TAG",obj.toString())
         val alertview = LayoutInflater.from(this.activity).inflate(R.layout.alert,null)
         val name = alertview.findViewById<TextView>(R.id.txt_name_alert_elem)
         val image = alertview.findViewById<ImageView>(R.id.image_movie_alert_elem)
@@ -55,8 +60,8 @@ class HomeFragment : Fragment() {
         val remove = alertview.findViewById<Button>(R.id.remove)
         val addtocard = alertview.findViewById<Button>(R.id.addtocard)
         name.text = post[position].name
-        Picasso.get().load(post[position].imageurl).into(image)
         amount.text = t.toString()
+        Picasso.get().load(post[position].imageurl).into(image)
         add.setOnClickListener{
             t += 1
             amount.text = t.toString()
@@ -69,9 +74,6 @@ class HomeFragment : Fragment() {
 
         }
 
-
-
-
         val customDialog = Dialog(requireActivity())
         customDialog.setContentView(alertview)
         customDialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
@@ -81,25 +83,45 @@ class HomeFragment : Fragment() {
         }
 
         addtocard.setOnClickListener {
+            Log.d("TAG", "")
             val cache = activity?.cacheDir?.absolutePath
             val fileName = "$cache/Card.json"
-            list.add(name.text.toString())
-            list.add(amount.text.toString())
-            post[position].imageurl?.let { it1 -> list.add(it1) }
-            Log.d("TAG",list.toString()+fileName)
-            writeJSONfromFile(fileName,list)
-            list.clear()
+            obj.put("name",name.text)
+            obj.put("amount",amount.text)
+            obj.put("url",post[position].imageurl)
+            Log.d("TAG",obj.toString())
+            writeJSONfromFile(fileName,obj)
             customDialog.dismiss()
         }
 
     }
-    private fun writeJSONfromFile(s: String, movelist: MutableList<String>){
-        val gson = Gson()
-        val string : String = gson.toJson(movelist)
+    private fun writeJSONfromFile(s: String, movelist: JSONObject){
         val file = File(s)
-        file.writeText(string)
-    }
+        if (s != null){
+            Log.d("TAG",readJSONfromFileUpdate(s).toString())
+            val list : MutableList<String> = readJSONfromFileUpdate(s)
+            list.add(movelist.toString())
+            Log.d("TAG",list.toString())
+            file.writeText(list.toString())
+        }
+        else{
+            Log.d("TAG","null")
+        }
 
+
+    }
+    private fun readJSONfromFileUpdate(s : String): MutableList<String>{
+        Log.d("TAG","1")
+        var gson = Gson()
+        Log.d("TAG","2")
+        val bufferedReader: BufferedReader = File(s).bufferedReader()
+        Log.d("TAG","3")
+        var input = bufferedReader.use {it.readText()}
+        Log.d("TAG", "4 $input")
+        val read = gson.fromJson(input, Array<String>::class.java).toMutableList()
+        Log.d("TAG", "")
+        return read
+    }
     private fun readJSONfromFile(f:String) {
 
         //Creating a new Gson object to read data
@@ -110,7 +132,7 @@ class HomeFragment : Fragment() {
         val inputString = bufferedReader.use { it.readText() }
         //Convert the Json File to Gson Object
         var post = gson.fromJson(inputString, Array<Movie>::class.java).toMutableList()
-//        //Initialize the String Builder
+//        //Initialize the String Builde
         Log.d("TAG", "Done")
         recyclerMovieList.adapter= MyMovieAdapter(post, clickListener = {listen(it, post)})
     }

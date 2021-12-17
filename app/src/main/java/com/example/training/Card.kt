@@ -1,5 +1,6 @@
 package com.example.training
 
+//data class Card(var name: String,var amount: String)
 class Card {
     var name: String? = null
     var url: String? = null

@@ -59,6 +59,7 @@ class MainActivity : AppCompatActivity() {
                 }
                 @SuppressLint("SdCardPath")
                 override fun onResponse(call: Call<MutableList<Movie>>, response: Response<MutableList<Movie>>) {
+
                     val fileName = cacheDir.absolutePath+"/MovieJson.json"
                     val movieList: MutableList<Movie> = response.body() as MutableList<Movie>
                     writeJSONtoFile(fileName, movieList)

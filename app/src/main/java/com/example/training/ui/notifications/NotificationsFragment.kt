@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.training.Card
 import com.example.training.MyCardAdapter
 import com.example.training.R
 import com.google.gson.Gson
@@ -35,15 +36,11 @@ class NotificationsFragment : Fragment() {
         Log.d("TAG","2")
         val bufferedReader: BufferedReader = File(s).bufferedReader()
         Log.d("TAG","3")
-        val input = bufferedReader.use {it.readText()}
-        Log.d("TAG","4")
-        val read = gson.fromJson(input,Array<String>::class.java).toMutableList()
-        Log.d("TAG", read.toString())
+        var input = bufferedReader.use {it.readText()}
+        Log.d("TAG", "4 $input")
+        val read = gson.fromJson(input, Array<Card>::class.java).toMutableList()
+        Log.d("TAG", "")
         recyclerView.adapter = MyCardAdapter(read)
-
     }
-
-
-
 
 }
