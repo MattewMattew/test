@@ -37,24 +37,36 @@ class NotificationsFragment : Fragment() {
         val view = LayoutInflater.from(container?.context).inflate(R.layout.fragment_notifications,container, false)
         clear = view.findViewById(R.id.clearbutton)
         image = view.findViewById(R.id.emptyimage)
-        if (resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK == Configuration.UI_MODE_NIGHT_YES) {
-            Log.d("TAG", "YES")
-            image.setImageResource(R.drawable.ic_book_svgrepo_com__2_white)
-        }
+//        if (resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK == Configuration.UI_MODE_NIGHT_YES) {
+//            Log.d("TAG", "YES")
+//            image.setImageResource(R.drawable.ic_book_svgrepo_com__2_white)
+//        }
+//        else{
+//            image.setImageResource(R.drawable.ic_book_svgrepo_com__2_)
+//        }
         emptyText = view.findViewById(R.id.emptytext)
         recyclerView = view.findViewById(R.id.recyclerCard)
         recyclerView.layoutManager = LinearLayoutManager(this.context)
         val fileName = activity?.cacheDir?.absolutePath+"/Card.json"
-        if (File(fileName).canRead()){
+        if (File(fileName).freeSpace.toString() != "0"){
+            Log.d("TAG",File(fileName).freeSpace.toString())
             readJSONfromFile(fileName)
+            if (readJSONfromFileUpdate(fileName).toString() == "[]")
+            {
+                image.alpha = 1F
+                emptyText.alpha = 1F
+                clear.alpha = 0F
+                recyclerView.alpha = 0F
+            }
         }
-
-        if (readJSONfromFileUpdate(fileName).toString() == "[]")
-        {
+        else{
             image.alpha = 1F
             emptyText.alpha = 1F
-            clear.alpha = 0.toFloat()
+            clear.alpha = 0F
+            recyclerView.alpha = 0F
         }
+
+
         clear.setOnClickListener {
             val list = mutableListOf<Card>()
             writeJSONtoFileUpdate(fileName,list)

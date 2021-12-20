@@ -81,4 +81,11 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.499" />
 
+    <ImageView
+        android:id="@+id/imageView5"
+        android:layout_width="198dp"
+        android:layout_height="170dp"
+        android:alpha="0"
+        app:srcCompat="@drawable/ic_book_svgrepo_com__2_white" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
