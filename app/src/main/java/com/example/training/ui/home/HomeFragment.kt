@@ -51,7 +51,6 @@ class HomeFragment : Fragment() {
     {
         val list = JSONArray()
         val obj = JSONObject()
-        Log.d("TAG",obj.toString())
         val alertview = LayoutInflater.from(this.activity).inflate(R.layout.alert,null)
         val name = alertview.findViewById<TextView>(R.id.txt_name_alert_elem)
         val image = alertview.findViewById<ImageView>(R.id.image_movie_alert_elem)
@@ -86,40 +85,56 @@ class HomeFragment : Fragment() {
             Log.d("TAG", "")
             val cache = activity?.cacheDir?.absolutePath
             val fileName = "$cache/Card.json"
+            if ("0"  !in amount.text)
+            {
             obj.put("name",name.text)
             obj.put("amount",amount.text)
             obj.put("url",post[position].imageurl)
-            Log.d("TAG",obj.toString())
             writeJSONfromFile(fileName,obj)
             customDialog.dismiss()
+            }
         }
 
     }
     private fun writeJSONfromFile(s: String, movelist: JSONObject){
         val file = File(s)
-        if (s != null){
-            Log.d("TAG",readJSONfromFileUpdate(s).toString())
-            val list : MutableList<String> = readJSONfromFileUpdate(s)
+        Log.d("TAG", "")
+        if (File(s).canRead())
+        {
+            val card : MutableList<Card> = readJSONfromFileUpdate(s)
+            Log.d("TAG", "Card size = "+card.size.toString())
+            val obj = JSONObject()
+            val list = mutableListOf<String>()
+            for (i in 0..card.size-1) {
+                card[i].name?.let { obj.put("name", it) }
+                card[i].amount?.let { obj.put("amount", it) }
+                card[i].url?.let { obj.put("url", it) }
+                list.add(obj.toString())
+            }
             list.add(movelist.toString())
             Log.d("TAG",list.toString())
             file.writeText(list.toString())
         }
-        else{
-            Log.d("TAG","null")
+        else
+        {
+            val list = mutableListOf<String>()
+            list.add(movelist.toString())
+            file.writeText(list.toString())
         }
 
 
+
     }
-    private fun readJSONfromFileUpdate(s : String): MutableList<String>{
+    private fun readJSONfromFileUpdate(s : String): MutableList<Card> {
         Log.d("TAG","1")
         var gson = Gson()
-        Log.d("TAG","2")
+        Log.d("TAG","2 ${File(s).canRead()}")
         val bufferedReader: BufferedReader = File(s).bufferedReader()
         Log.d("TAG","3")
         var input = bufferedReader.use {it.readText()}
         Log.d("TAG", "4 $input")
-        val read = gson.fromJson(input, Array<String>::class.java).toMutableList()
-        Log.d("TAG", "")
+        val read = gson.fromJson(input, Array<Card>::class.java).toMutableList()
+        Log.d("TAG", "Done")
         return read
     }
     private fun readJSONfromFile(f:String) {
@@ -133,7 +148,6 @@ class HomeFragment : Fragment() {
         //Convert the Json File to Gson Object
         var post = gson.fromJson(inputString, Array<Movie>::class.java).toMutableList()
 //        //Initialize the String Builde
-        Log.d("TAG", "Done")
         recyclerMovieList.adapter= MyMovieAdapter(post, clickListener = {listen(it, post)})
     }
 }
