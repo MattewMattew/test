@@ -105,13 +105,29 @@ class HomeFragment : Fragment() {
             Log.d("TAG", "Card size = "+card.size.toString())
             val obj = JSONObject()
             val list = mutableListOf<String>()
-            for (i in 0..card.size-1) {
-                card[i].name?.let { obj.put("name", it) }
-                card[i].amount?.let { obj.put("amount", it) }
-                card[i].url?.let { obj.put("url", it) }
-                list.add(obj.toString())
+            var result: Int? = null
+            for (i in 0 until card.size) {
+                if (card[i].name == movelist["name"])
+                {
+                    card[i].name?.let { obj.put("name", it) }
+                    card[i].url?.let { obj.put("url", it) }
+                    val amount = movelist["amount"].toString()
+                    val amountCard = card[i].amount.toString()
+                    result = amount.toInt() + amountCard.toInt()
+
+                    obj.put("amount", result)
+                    list.add(obj.toString())
+
+                    }
+                else{
+                    card[i].name?.let { obj.put("name", it) }
+                    card[i].amount?.let { obj.put("amount", it) }
+                    card[i].url?.let { obj.put("url", it) }
+                    list.add(obj.toString())
+                }
             }
-            list.add(movelist.toString())
+            if (result == null){
+            list.add(movelist.toString())}
             Log.d("TAG",list.toString())
             file.writeText(list.toString())
         }

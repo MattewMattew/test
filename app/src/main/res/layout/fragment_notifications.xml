@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:backgroundTint="@color/white"
     tools:context=".ui.notifications.NotificationsFragment">
 
     <Button
@@ -29,4 +30,29 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/clearbutton"
         app:layout_constraintVertical_bias="1.0" />
+
+    <ImageView
+        android:id="@+id/emptyimage"
+        android:layout_width="307dp"
+        android:layout_height="376dp"
+        android:alpha="1"
+        android:src="@drawable/ic_book_svgrepo_com__2_"
+        app:layout_constraintBottom_toBottomOf="@+id/recyclerCard"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.497" />
+
+    <TextView
+        android:id="@+id/emptytext"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:alpha="0"
+        android:text="EMPTY"
+        android:textSize="48sp"
+        app:layout_constraintBottom_toBottomOf="@+id/recyclerCard"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/emptyimage"
+        app:layout_constraintVertical_bias="0.0" />
 </androidx.constraintlayout.widget.ConstraintLayout>
