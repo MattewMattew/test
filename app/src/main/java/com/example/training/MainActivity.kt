@@ -21,7 +21,6 @@ import java.io.BufferedReader
 import java.io.File
 
 class MainActivity : AppCompatActivity() {
-    private var stringBuilder:StringBuilder?=null
     lateinit var mService: RetrofitServices
     lateinit var email: EditText
     lateinit var password: EditText
@@ -133,14 +132,14 @@ class MainActivity : AppCompatActivity() {
 
     }
     private fun writeJSONtoFile(s:String, movieList: MutableList<Movie>) {
-        var post = movieList
-        var gson = Gson()
-        var jsonString: String = gson.toJson(post)
+        val post = movieList
+        val gson = Gson()
+        val jsonString: String = gson.toJson(post)
         val file = File(s)
         file.writeText(jsonString)
     }
     fun login(view: android.view.View) {
-//       if (email.text.toString().isNotEmpty() && password.text.toString().isNotEmpty()) {
+//       if (email.text.toString().isNotEmpty() && password.text.toString().isNotEmpty())
         val intent = Intent(this, MenuActivity::class.java)
         startActivity(intent)
         finish()

@@ -1,15 +1,12 @@
 package com.example.training
 
-import android.graphics.Color
-import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
-import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.fragment.app.Fragment
 import com.google.gson.Gson
 import com.squareup.picasso.Picasso
 import java.io.BufferedReader
@@ -17,12 +14,12 @@ import java.io.File
 
 class ScreenSlidePageFragment(private val position: Int) : Fragment() {
 
-     lateinit var name: TextView
-     lateinit var team: TextView
-     lateinit var createdby: TextView
-     lateinit var biography: TextView
-     lateinit var image: ImageView
-     lateinit var realName: TextView
+    private lateinit var name: TextView
+    private lateinit var team: TextView
+    private lateinit var createdby: TextView
+    private lateinit var biography: TextView
+    private lateinit var image: ImageView
+    private lateinit var realName: TextView
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -47,9 +44,9 @@ class ScreenSlidePageFragment(private val position: Int) : Fragment() {
         return view
     }
     private fun readJSONfromFileUpdate(s : String): MutableList<Movie> {
-        var gson = Gson()
+        val gson = Gson()
         val bufferedReader: BufferedReader = File(s).bufferedReader()
-        var input = bufferedReader.use {it.readText()}
+        val input = bufferedReader.use {it.readText()}
         val read = gson.fromJson(input, Array<Movie>::class.java).toMutableList()
         return read
     }

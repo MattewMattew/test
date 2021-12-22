@@ -1,40 +1,16 @@
 package com.example.training
 
-import android.Manifest
-import android.Manifest.permission.WRITE_CALENDAR
 import android.content.Context
 import android.content.Intent
-import android.content.pm.PackageManager
 import android.net.ConnectivityManager
 import android.os.Bundle
-import android.os.CountDownTimer
-import android.os.PersistableBundle
-import android.util.Log
-import android.view.MenuItem
 import android.view.Window
-import android.widget.TextView
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import androidx.core.view.get
 import androidx.navigation.findNavController
-import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.example.training.databinding.ActivityMenuBinding
-import com.example.training.ui.home.HomeFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.google.android.material.navigation.NavigationView
-import com.google.gson.Gson
-import com.google.gson.GsonBuilder
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
-import java.io.BufferedReader
-import java.io.File
-import java.util.ArrayList
 
 class MenuActivity : AppCompatActivity() {
 

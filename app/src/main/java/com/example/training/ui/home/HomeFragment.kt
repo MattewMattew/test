@@ -47,7 +47,6 @@ class HomeFragment : Fragment() {
     @SuppressLint("SetTextI18n", "InflateParams")
     fun listen(position: Int, post: MutableList<Movie>)
     {
-        val list = JSONArray()
         val obj = JSONObject()
         val alertview = LayoutInflater.from(this.activity).inflate(R.layout.alert,null)
         val name = alertview.findViewById<TextView>(R.id.txt_name_alert_elem)
@@ -82,7 +81,7 @@ class HomeFragment : Fragment() {
         addtocard.setOnClickListener {
             val cache = activity?.cacheDir?.absolutePath
             val fileName = "$cache/Card.json"
-            if ("0"  !in amount.text)
+            if (amount.text != "0")
             {
             obj.put("name",name.text)
             obj.put("amount",amount.text)
@@ -137,17 +136,17 @@ class HomeFragment : Fragment() {
 
     }
     private fun readJSONfromFileUpdate(s : String): MutableList<Card> {
-        var gson = Gson()
+        val gson = Gson()
         val bufferedReader: BufferedReader = File(s).bufferedReader()
-        var input = bufferedReader.use {it.readText()}
+        val input = bufferedReader.use {it.readText()}
         val read = gson.fromJson(input, Array<Card>::class.java).toMutableList()
         return read
     }
     private fun readJSONfromFile(f:String) {
-        var gson = GsonBuilder().create()
+        val gson = GsonBuilder().create()
         val bufferedReader: BufferedReader = File(f).bufferedReader()
         val inputString = bufferedReader.use { it.readText() }
-        var post = gson.fromJson(inputString, Array<Movie>::class.java).toMutableList()
+        val post = gson.fromJson(inputString, Array<Movie>::class.java).toMutableList()
         recyclerMovieList.adapter= MyMovieAdapter(post, clickListener = {listen(it, post)})
     }
 }

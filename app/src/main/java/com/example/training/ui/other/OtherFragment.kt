@@ -37,9 +37,9 @@ class OtherFragment : Fragment() {
         override fun createFragment(position: Int): Fragment = ScreenSlidePageFragment(position)
     }
     private fun readJSONfromFileUpdate(s : String): MutableList<Movie> {
-        var gson = Gson()
+        val gson = Gson()
         val bufferedReader: BufferedReader = File(s).bufferedReader()
-        var input = bufferedReader.use {it.readText()}
+        val input = bufferedReader.use {it.readText()}
         val read = gson.fromJson(input, Array<Movie>::class.java).toMutableList()
         return read
     }
