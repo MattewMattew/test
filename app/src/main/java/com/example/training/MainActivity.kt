@@ -63,11 +63,6 @@ class MainActivity : AppCompatActivity() {
                     val fileName = cacheDir.absolutePath+"/MovieJson.json"
                     val movieList: MutableList<Movie> = response.body() as MutableList<Movie>
                     writeJSONtoFile(fileName, movieList)
-                    val test = "/data/user/0/com.example.training/MovieJson.json"
-                    writeJSONtoFile(test, movieList)
-//                recyclerMovieList.adapter= MyMovieAdapter(baseContext,response.body() as MutableList<Movie>)
-
-
                 }
             })
 
@@ -138,13 +133,9 @@ class MainActivity : AppCompatActivity() {
 
     }
     private fun writeJSONtoFile(s:String, movieList: MutableList<Movie>) {
-        //Create a Object of Post
         var post = movieList
-        //Create a Object of Gson
         var gson = Gson()
-        //Convert the Json object to JsonString
         var jsonString: String = gson.toJson(post)
-        //Initialize the File Writer and write into file
         val file = File(s)
         file.writeText(jsonString)
     }
@@ -153,14 +144,6 @@ class MainActivity : AppCompatActivity() {
         val intent = Intent(this, MenuActivity::class.java)
         startActivity(intent)
         finish()
-//       }
-//       else{
-//           val alert = AlertDialog.Builder(this).setTitle("Error")
-//               .setPositiveButton("Ok", null)
-//               .setMessage("You miss Login or Password!")
-//               .create()
-//               .show()
-//       }
     }
 
 }

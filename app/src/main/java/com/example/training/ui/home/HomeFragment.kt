@@ -28,8 +28,6 @@ import java.util.*
 class HomeFragment : Fragment() {
     private lateinit var recyclerMovieList: RecyclerView
     var t: Int = 0
-    // This property is only valid between onCreateView and
-    // onDestroyView.
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -82,7 +80,6 @@ class HomeFragment : Fragment() {
         }
 
         addtocard.setOnClickListener {
-            Log.d("TAG", "")
             val cache = activity?.cacheDir?.absolutePath
             val fileName = "$cache/Card.json"
             if ("0"  !in amount.text)
@@ -102,7 +99,6 @@ class HomeFragment : Fragment() {
         if (File(s).canRead())
         {
             val card : MutableList<Card> = readJSONfromFileUpdate(s)
-            Log.d("TAG", "Card size = "+card.size.toString())
             val obj = JSONObject()
             val list = mutableListOf<String>()
             var result: Int? = null
@@ -128,7 +124,6 @@ class HomeFragment : Fragment() {
             }
             if (result == null){
             list.add(movelist.toString())}
-            Log.d("TAG",list.toString())
             file.writeText(list.toString())
         }
         else
@@ -142,28 +137,17 @@ class HomeFragment : Fragment() {
 
     }
     private fun readJSONfromFileUpdate(s : String): MutableList<Card> {
-        Log.d("TAG","1")
         var gson = Gson()
-        Log.d("TAG","2 ${File(s).canRead()}")
         val bufferedReader: BufferedReader = File(s).bufferedReader()
-        Log.d("TAG","3")
         var input = bufferedReader.use {it.readText()}
-        Log.d("TAG", "4 $input")
         val read = gson.fromJson(input, Array<Card>::class.java).toMutableList()
-        Log.d("TAG", "Done")
         return read
     }
     private fun readJSONfromFile(f:String) {
-
-        //Creating a new Gson object to read data
         var gson = GsonBuilder().create()
-        //Read the PostJSON.json file
         val bufferedReader: BufferedReader = File(f).bufferedReader()
-        // Read the text from bufferReader and store in String variable
         val inputString = bufferedReader.use { it.readText() }
-        //Convert the Json File to Gson Object
         var post = gson.fromJson(inputString, Array<Movie>::class.java).toMutableList()
-//        //Initialize the String Builde
         recyclerMovieList.adapter= MyMovieAdapter(post, clickListener = {listen(it, post)})
     }
 }

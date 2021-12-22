@@ -49,7 +49,6 @@ class NotificationsFragment : Fragment() {
         recyclerView.layoutManager = LinearLayoutManager(this.context)
         val fileName = activity?.cacheDir?.absolutePath+"/Card.json"
         if (File(fileName).freeSpace.toString() != "0"){
-            Log.d("TAG",File(fileName).freeSpace.toString())
             readJSONfromFile(fileName)
             if (readJSONfromFileUpdate(fileName).toString() == "[]")
             {
@@ -99,15 +98,10 @@ class NotificationsFragment : Fragment() {
         return view
     }
     private fun readJSONfromFile(s : String){
-        Log.d("TAG","1")
         var gson = Gson()
-        Log.d("TAG","2")
         val bufferedReader: BufferedReader = File(s).bufferedReader()
-        Log.d("TAG","3")
         var input = bufferedReader.use {it.readText()}
-        Log.d("TAG", "4 $input")
         val read = gson.fromJson(input, Array<Card>::class.java).toMutableList()
-        Log.d("TAG", "")
         recyclerView.adapter = MyCardAdapter(read)
         writeJSONtoFileUpdate(s,read)
     }
@@ -119,13 +113,9 @@ class NotificationsFragment : Fragment() {
         return read
     }
     private fun writeJSONtoFileUpdate(s:String, movieList: MutableList<Card>) {
-        //Create a Object of Post
         var post = movieList
-        //Create a Object of Gson
         var gson = Gson()
-        //Convert the Json object to JsonString
         var jsonString: String = gson.toJson(post)
-        //Initialize the File Writer and write into file
         val file = File(s)
         file.writeText(jsonString)
     }

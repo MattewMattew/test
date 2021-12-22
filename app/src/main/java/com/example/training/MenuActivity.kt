@@ -19,12 +19,14 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.view.get
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.training.databinding.ActivityMenuBinding
 import com.example.training.ui.home.HomeFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.android.material.navigation.NavigationView
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import retrofit2.Call
@@ -35,12 +37,7 @@ import java.io.File
 import java.util.ArrayList
 
 class MenuActivity : AppCompatActivity() {
-    lateinit var recyclerText: TextView
-    private var stringBuilder: StringBuilder? = null
-    lateinit var mService: RetrofitServices
-    lateinit var recyclerMovieList: RecyclerView
-    lateinit var adapter: MyMovieAdapter
-    lateinit var bottomNavigation: BottomNavigationView
+
     private lateinit var binding: ActivityMenuBinding
     private val Context.isConnected: Boolean
         get() {
@@ -54,19 +51,12 @@ class MenuActivity : AppCompatActivity() {
         setContentView(binding.root)
 
 
-
-
-
         val window: Window = this.window
-        window.statusBarColor = ContextCompat.getColor(this, R.color.white)
+        window.statusBarColor = ContextCompat.getColor(this, R.color.white_dark)
 
         val navView: BottomNavigationView = binding.navView
         val navController = findNavController(R.id.nav_host_fragment_activity_menu)
         navView.setupWithNavController(navController)
-//        recyclerMovieList = findViewById(R.id.recyclerMovieList)
-//        recyclerMovieList.layoutManager = LinearLayoutManager(this)
-//        val fileName = cacheDir.absolutePath+"/MovieJson.json"
-//        readJSONfromFile(fileName)
     }
 
 
